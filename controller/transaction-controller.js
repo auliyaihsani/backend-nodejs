@@ -40,7 +40,7 @@ exports.insert = function (req, res) {
             response.ok('data inserted with id' + data.id, res);
         }
     });
-};
+}
 
 
 
@@ -69,14 +69,14 @@ exports.updateTransaction = function (req, res) {
 
 exports.del = function (req, res) {
     logger.info(util.format('deleting transaction id %s', req.params['id']));
-    accountDao.getById(req.params['id'], function (err, data) {
+    transactionDao.getById(req.params['id'], function (err, data) {
         if (err) {
             logger.error('error call get byid' + err);
             response.err(err, res);
         } else if (data == null) {
             response.datanotfound('transaction not found', res);
         } else {
-            accountDao.del(req.params['id'], function (err, data) {
+            transactionDao.del(req.params['id'], function (err, data) {
                 if (err) {
                     logger.error('error call delete : ' + err);
                     response.err(error, res);
@@ -85,4 +85,4 @@ exports.del = function (req, res) {
             });
         }
     });
-};
+}

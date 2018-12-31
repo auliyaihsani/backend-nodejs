@@ -1,6 +1,7 @@
 const {
     Transaction,
-    Account
+    Account,
+    Customer
 } = require('../db/sequelize');
 
 var logger = require('../util/logging/winston-logger');
@@ -19,7 +20,11 @@ exports.getById = function getById(id, callback) {
 
 exports.getAll = function getAll(callback) {
     Transaction.findAll({
-            include: [Account]
+            // include: [Account]
+            include: [{
+                model: Account,
+                include: [Customer]
+            }]
         })
         .then((transaction) => {
             return callback(null, transaction);
@@ -32,7 +37,7 @@ exports.getAll = function getAll(callback) {
 
 
 exports.insert = function insert(data, callback) {
-    transaction = data;
+    let transaction = data;
     if (transaction.account == null && transaction.accountid == null) {
         res.json('account kosong');
     } else {
@@ -53,7 +58,7 @@ exports.insert = function insert(data, callback) {
 
 
 exports.update = function update(id, data, callback) {
-    transaction = data;
+    let transaction = data;
     if (transaction.account == null && account.id == null) {
         res.json('account kosong');
     } else {
@@ -73,6 +78,23 @@ exports.update = function update(id, data, callback) {
             logger.info('result update:');
             logger.info(result);
             return callback(null, data);
+        })
+        .catch((error) => {
+            logger.error(error);
+            return callback(error);
+        })
+};
+
+exports.del = function del(id, callback) {
+    Transaction.destroy({
+            where: {
+                id: id
+            }
+        })
+        .then(result => {
+            logger.info('result  update:');
+            logger.info(result);
+            return callback(null, id);
         })
         .catch((error) => {
             logger.error(error);

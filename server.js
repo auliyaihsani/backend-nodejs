@@ -1,13 +1,22 @@
 var express = require('express'),
     app = express(),
-    port = process.env.PORT || 6000,
-    bodyParser = require('body-parser')
-morgan = require('morgan');
+    port = process.env.PORT || 3000,
+    bodyParser = require('body-parser'),
+    morgan = require('morgan');
 
 app.use(bodyParser.urlencoded({
     extended: true
 }));
 app.use(bodyParser.json());
+
+var cors = require('cors')
+app.use(cors());
+
+app.use(function (req, res, next) {
+    res.header("accses-control-allow-origin", "*");
+    res.header("accses-control-alowed-headers", "origin, X-requested-with, content-Type, accept");
+    next();
+})
 
 // logging
 var logger = require("./util/logging/winston-logger");
@@ -24,8 +33,8 @@ customerRoute(app);
 var accountRoute = require('./route/routes-account');
 accountRoute(app);
 
-var accountRoute = require('./route/routes-transaction');
-accountRoute(app);
+var transactionRoute = require('./route/routes-transaction');
+transactionRoute(app);
 
 
 /** start app **/

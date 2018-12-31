@@ -2,7 +2,8 @@
 
 exports.ok = function (values, res) {
     var data = {
-        'status': 0,
+        'status': 200,
+        'message': 'succes',
         'values': values
     };
     res.json(data);
@@ -12,6 +13,7 @@ exports.ok = function (values, res) {
 exports.err = function (values, res) {
     var data = {
         'status': 99,
+        'message': 'error',
         'values': values
     };
     res.json(data);
@@ -21,6 +23,7 @@ exports.err = function (values, res) {
 exports.datanotfound = function (values, res) {
     var data = {
         'status': 14,
+        'message': 'data not found',
         'values': (values ? values : 'data not found')
     };
     res.json(data);

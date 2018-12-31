@@ -13,7 +13,7 @@ exports.getById = function getById(id, callback) {
             logger.error(error);
             return callback(error);
         })
-};
+}
 
 exports.getAll = function getAll(callback) {
     Account.findAll({
@@ -26,12 +26,13 @@ exports.getAll = function getAll(callback) {
             logger.error(error);
             return callback(error);
         })
-};
+}
 
 
 
 exports.insert = function insert(data, callback) {
-    account = data;
+
+    let account = data;
     if (account.customer == null && account.customerid == null) {
         res.json('customer kosong');
     } else {
@@ -49,10 +50,10 @@ exports.insert = function insert(data, callback) {
             return callback(error);
         })
 
-};
+}
 
 exports.update = function update(id, data, callback) {
-    account = data;
+    let account = data;
     if (account.customer == null && account.id == null) {
         res.json('customer kosong');
     } else {
@@ -72,6 +73,25 @@ exports.update = function update(id, data, callback) {
             logger.info('result  update:');
             logger.info(result);
             return callback(null, data);
+        })
+        .catch((error) => {
+            logger.error(error);
+            return callback(error);
+        })
+
+
+}
+
+exports.del = function del(id, callback) {
+    Account.destroy({
+            where: {
+                id: id
+            }
+        })
+        .then(result => {
+            logger.info('result  update:');
+            logger.info(result);
+            return callback(null, id);
         })
         .catch((error) => {
             logger.error(error);

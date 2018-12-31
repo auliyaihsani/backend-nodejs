@@ -14,7 +14,7 @@ exports.accounts = function (req, res) {
     });
 }
 
-exports.getById = function (req, res) {
+exports.ById = function (req, res) {
     accountDao.getById(req.params['id'], function (err, data) {
         if (err) {
             logger.error('error call get by id : ' + err);
@@ -24,7 +24,7 @@ exports.getById = function (req, res) {
     });
 }
 
-exports.insert = function (req, res) {
+exports.insertAccount = function (req, res) {
     logger.info('request for insert :');
     logger.debug(req.body);
     accountDao.insert(req.body, function (err, data) {
@@ -78,4 +78,4 @@ exports.del = function (req, res) {
             });
         }
     });
-};
+}

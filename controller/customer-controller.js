@@ -10,10 +10,11 @@ exports.customers = function (req, res) {
             logger.error('error while select: ' + error);
             response.err(error, res);
         } else {
-            response.ok(rows, res)
+            response.ok(rows, res);
+            // return res.json(rows);
         }
     });
-};
+}
 
 exports.getCustomerById = function (req, res) {
     customerDao.getById(req.params['id'], function (err, data) {
@@ -24,7 +25,7 @@ exports.getCustomerById = function (req, res) {
         response.ok(data, res);
     });
 
-};
+}
 
 exports.insertCustomer = function (req, res) {
     logger.info('request for insert :');
@@ -36,7 +37,7 @@ exports.insertCustomer = function (req, res) {
         }
         response.ok('data inserted with id ' + data.id, res);
     });
-};
+}
 
 
 exports.updateCustomer = function (req, res) {
@@ -58,7 +59,7 @@ exports.updateCustomer = function (req, res) {
             });
         }
     });
-};
+}
 
 exports.del = function (req, res) {
     logger.info(util.format('deleting customer id %s', req.params['id']));
@@ -79,4 +80,4 @@ exports.del = function (req, res) {
             });
         }
     });
-};
+}
